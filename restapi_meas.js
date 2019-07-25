@@ -31,7 +31,7 @@ function getHandler(request, response) {
 
 
             console.log("OK1");
-            ris.startSwarm("measurement_example.siteManagement", "create", tokenSymbol, "cd").onReturn(function (err, siteId) {
+            ris.startSwarm("measurement_example.siteManagement", "create", tokenSymbol, "cdamian").onReturn(function (err, siteId) {
                 if (err) {
                     console.log(err);
                    response.end('ERR', err);
@@ -57,7 +57,7 @@ function postHandler(request, response) {
     var myId="cdamian";
     var result = 'initial';
 
-    if (request.url === '/account') {
+    if (request.url === '/sites') {
       request.on('data', function (data) {
 
             const interact = require("interact");
@@ -67,7 +67,7 @@ function postHandler(request, response) {
             myId = siteId;
             console.log("received id: ", siteId);
 
-            ris.startSwarm("measurement_example.siteManagement", "existingAccount", siteId).onReturn(function(err, owner){
+            ris.startSwarm("measurement_example.siteManagement", "existingSite", siteId).onReturn(function(err, owner){
                 if(err){
                     response.end('Error!');
                 }else{

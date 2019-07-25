@@ -93,7 +93,7 @@ $$.transaction.describe("siteManagement", {
 
         this.return(null, site.balance());
     },
-    existingAccount: function(siteId){
+    existingSite: function(siteId){
         let transaction = $$.blockchain.beginTransaction({});
         let site = transaction.lookup('measurement_example.Site', siteId);
 

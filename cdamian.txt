@@ -2,3 +2,18 @@ privatesky folosit pt articol sielmen
 
 account
     - id nume punct masurare {timestamp, perechi cheie valoare}
+
+
+
+
+POST
+/sites
+    - parametru name: nume
+    - return id
+
+
+GET
+/sites/id
+    - return nume
+    /id/values
+    - return marimi
