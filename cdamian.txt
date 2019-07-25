@@ -1,1 +1,4 @@
 privatesky folosit pt articol sielmen
+
+account
+    - id nume punct masurare {timestamp, perechi cheie valoare}

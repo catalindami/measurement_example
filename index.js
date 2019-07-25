@@ -1,8 +1,8 @@
 module.exports = $$.library(function(){
     require("./assets/Token.js");
-    require("./assets/Account.js");
+    require("./assets/Site.js");
 
 
     require("./transactions/tokenManagement.js");
-    require("./transactions/accountManagement.js");
+    require("./transactions/siteManagement.js");
 });

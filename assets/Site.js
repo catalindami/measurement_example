@@ -3,7 +3,7 @@ const states = {
     INACTIVE: "INACTIVE"
 };
 
-$$.asset.describe("Account", {
+$$.asset.describe("Site", {
     public: {
         alias: "string",
         uid: "string:alias",
@@ -72,5 +72,8 @@ $$.asset.describe("Account", {
     },
     getSymbol: function(){
         return this.symbol;
+    },
+    getOwner: function(){
+        return this.owner;
     }
 });

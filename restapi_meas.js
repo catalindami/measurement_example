@@ -31,14 +31,14 @@ function getHandler(request, response) {
 
 
             console.log("OK1");
-            ris.startSwarm("measurement_example.accountManagement", "create", tokenSymbol, "user_id_from_classic_database").onReturn(function (err, accountId) {
+            ris.startSwarm("measurement_example.siteManagement", "create", tokenSymbol, "cd").onReturn(function (err, siteId) {
                 if (err) {
                     console.log(err);
                    response.end('ERR', err);
 
                 } else {
-                    console.log("New Account", accountId);
-                    response.end('doneGET, id: ' + accountId);
+                    console.log("New Account", siteId);
+                    response.end('doneGET, id: ' + siteId);
                 }
             });
 
@@ -55,47 +55,39 @@ function postHandler(request, response) {
 
 
     var myId="cdamian";
-    var result = '';
+    var result = 'initial';
 
     if (request.url === '/account') {
       request.on('data', function (data) {
 
             const interact = require("interact");
-
             const ris = interact.createRemoteInteractionSpace('testRemote', 'http://127.0.0.1:8080', 'local/agent/example');
-
             const dataIn = JSON.parse(data);
+            var siteId = dataIn.id;
+            myId = siteId;
+            console.log("received id: ", siteId);
 
-            var accountId = dataIn.id;
-
-            myId = accountId;
-
-            console.log("received id: ", accountId);
-
-
-
-            ris.startSwarm("measurement_example.accountManagement", "existingAccount", accountId).onReturn(function(err, valid){
+            ris.startSwarm("measurement_example.siteManagement", "existingAccount", siteId).onReturn(function(err, owner){
                 if(err){
-                    console.log(err);
-
+                    response.end('Error!');
                 }else{
-                    console.log("ACCOUNT: ", valid?'valid!':'invalid!!');
-                    result = valid;
+                    console.log("ACCOUNT: valid", " Owner: ",owner);//valid?'valid!':'invalid!!',
+                    result = owner;
 
+                    response.end(result);
                 }
             });
 
-
-
-
         });
 
-        request.on('end', function () {
-            console.log("id(end)=", myId);
+
+      request.on('end', function () {
+            console.log("id(end)=", result);
             response.statusCode = 201;
             response.setHeader('Content-Type', 'application/json');
-            response.end(JSON.stringify(myId), result);
+
         });
+
     } else {
         response.statusCode = 404;
         response.end('Nott found!');
