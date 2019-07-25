@@ -1,5 +1,4 @@
 const http = require('http');
-//const querystring = require('querystring');
 const port = 3000;
 require('../../../builds/devel/pskruntime');
 require('../../../builds/devel/httpinteract');
