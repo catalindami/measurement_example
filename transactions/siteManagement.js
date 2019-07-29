@@ -111,5 +111,34 @@ $$.transaction.describe("siteManagement", {
             let own = site.getOwner();
             this.return(null, own);
         }
+    },
+    updateSiteProperty: function(siteId, property, value){
+        let transaction = $$.blockchain.beginTransaction({});
+        let site = transaction.lookup('measurement_example.Site', siteId);
+
+        if(!site.valid()){
+            this.return("Invalid site");
+            return;
+        }
+
+        if(!site.active()){
+            this.return("Site is not active.");
+            return;
+        }
+        else{
+            // console.log("Site (siteManager):",site.getOwner());
+            console.log("Owner updated!!!")
+            if(site.setOwner(value)) {
+                console.log(site.getOwner());
+            }
+            try{
+                transaction.add(site);
+                $$.blockchain.commit(transaction);
+            }catch(err){
+                this.return("Site creation failed!");
+                return;
+            }
+            this.return (null, value);
+        }
     }
 });

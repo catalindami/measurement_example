@@ -75,5 +75,10 @@ $$.asset.describe("Site", {
     },
     getOwner: function(){
         return this.owner;
+    },
+    setOwner: function(newOwner){
+        this.owner = newOwner;
+        console.log("Site.js - owner updated!!!");
+        return true;
     }
 });
