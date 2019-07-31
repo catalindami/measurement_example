@@ -140,5 +140,53 @@ $$.transaction.describe("siteManagement", {
             }
             this.return (null, value);
         }
+    },
+    printSiteValues: function(siteId){
+        let transaction = $$.blockchain.beginTransaction({});
+        let site = transaction.lookup('measurement_example.Site', siteId);
+
+        if(!site.valid()){
+            this.return("Invalid site");
+            return;
+        }
+
+        if(!site.active()){
+            this.return("Site is not active.");
+            return;
+        }
+        else{
+            console.log("Site Values (siteManager):",site.getValues());
+            let val = site.getValues();
+            this.return(null, val);
+        }
+    },
+    updateSiteValues: function(siteId, value){
+        let transaction = $$.blockchain.beginTransaction({});
+        let site = transaction.lookup('measurement_example.Site', siteId);
+
+        if(!site.valid()){
+            this.return("Invalid site");
+            return;
+        }
+
+        if(!site.active()){
+            this.return("Site is not active.");
+            return;
+        }
+        else{
+            console.log("Values updated!!!")
+            if(site.setValues(value)) {
+                console.log(site.getValues());
+            }
+            try{
+                transaction.add(site);
+                $$.blockchain.commit(transaction);
+
+            }catch(err){
+                this.return("Site creation failed!");
+                return;
+            }
+            this.return (null, value);
+        }
     }
 });

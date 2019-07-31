@@ -8,6 +8,7 @@ $$.asset.describe("Site", {
         alias: "string",
         uid: "string:alias",
         owner: "string",
+        values:"string",
         amount: "number",
         symbol: "string",
         state: "string"
@@ -22,6 +23,7 @@ $$.asset.describe("Site", {
         this.symbol = symbol;
         this.owner = owner;
         this.amount = 0;
+        this.values = "";
         this.state = states.ACTIVE;
 
         return true;
@@ -78,7 +80,14 @@ $$.asset.describe("Site", {
     },
     setOwner: function(newOwner){
         this.owner = newOwner;
-        console.log("Site.js - owner updated!!!");
+        //console.log("Site.js - owner updated!!!");
+        return true;
+    },
+    getValues: function(){
+        return this.values;
+    },
+    setValues: function(newValues){
+        this.values = newValues;
         return true;
     }
 });

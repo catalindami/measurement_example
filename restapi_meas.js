@@ -83,7 +83,6 @@ function postHandler(request, response) {
 
         });
 
-
       request.on('end', function () {
             console.log("id(end)=", result);
             response.statusCode = 201;
@@ -91,7 +90,38 @@ function postHandler(request, response) {
 
         });
 
-    } else {
+    }else if (request.url === '/values') {
+        request.on('data', function (data) {
+
+            const interact = require("interact");
+            const ris = interact.createRemoteInteractionSpace('testRemote', 'http://127.0.0.1:8080', 'local/agent/example');
+            const dataIn = JSON.parse(data);
+            var siteId = dataIn.id;
+            myId = siteId;
+            console.log("received id: ", siteId);
+
+            ris.startSwarm("measurement_example.siteManagement", "printSiteValues", siteId).onReturn(function(err, values){
+                if(err){
+                    response.end('Error!');
+                }else{
+                    console.log("ACCOUNT: valid", " Values: ",values);//valid?'valid!':'invalid!!',
+                    result = values;
+
+                    response.end(result);
+                }
+            });
+
+        });
+
+        request.on('end', function () {
+            console.log("id(end)=", result);
+            response.statusCode = 201;
+            response.setHeader('Content-Type', 'application/json');
+
+        });
+
+    }
+    else {
         response.statusCode = 404;
         response.end('Nott found!');
     }
@@ -124,6 +154,47 @@ function putHandler(request, response) {
                         console.log("Site updated!", data);//valid?'valid!':'invalid!!',
                         response.statusCode = 200;
                         response.end('owner updated');
+                    }
+                });
+
+            }
+        });
+
+        //
+        // request.on('end', function () {
+        //     console.log("id(end)=", result);
+        //     response.statusCode = 201;
+        //     response.setHeader('Content-Type', 'application/json');
+        //
+        // });
+
+    }
+
+    else if (request.url === '/values') {
+        request.on('data', function (data) {
+            const dataIn = JSON.parse(data);
+            //console.log(dataIn);
+
+            if(!dataIn.hasOwnProperty('id') || !dataIn.hasOwnProperty('values')){
+                response.statusCode = 402;
+                response.end("Request must be id + owner!");
+            }
+            else {
+                const interact = require("interact");
+                const ris = interact.createRemoteInteractionSpace('testRemote', 'http://127.0.0.1:8080', 'local/agent/example');
+
+                var siteId = dataIn.id;
+                var newValues = dataIn.values;
+
+                console.log("received id: ", siteId, " newOwner: ", newValues);
+
+                ris.startSwarm("measurement_example.siteManagement", "updateSiteValues", siteId, newValues).onReturn(function (err, data) {
+                    if (err) {
+                        response.end('Error!');
+                    } else {
+                        console.log("Site updated!", data);//valid?'valid!':'invalid!!',
+                        response.statusCode = 200;
+                        response.end('Values updated');
                     }
                 });
 
