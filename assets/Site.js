@@ -10,45 +10,22 @@ $$.asset.describe("Site", {
         owner: "string",
         values:"string",
         amount: "number",
-        symbol: "string",
+        time: "string",
         state: "string"
     },
-    init: function(uid, symbol, owner){
+    init: function(uid, time, owner){
         if(!!this.owner){
             return false;
         }
 
         this.uid = uid;
         this.alias = uid;
-        this.symbol = symbol;
+        this.time = time;
         this.owner = owner;
         this.amount = 0;
         this.values = "";
         this.state = states.ACTIVE;
 
-        return true;
-    },
-    transfer: function(tokens){
-        if(this.state !== states.ACTIVE){
-            return false;
-        }
-
-        if(tokens > amount && tokens < 0){
-            return false;
-        }
-
-        this.amount -= tokens;
-        return true;
-    },
-    receive: function(tokens){
-        if(this.state !== states.ACTIVE){
-            return false;
-        }
-
-        if(tokens < 0){
-            return false;
-        }
-        this.amount += tokens;
         return true;
     },
     valid: function(){
@@ -57,24 +34,6 @@ $$.asset.describe("Site", {
     active: function(){
         return this.state === states.ACTIVE;
     },
-    close: function(){
-        if(this.amount > 0){
-            return false;
-        }
-
-        if(this.state != states.ACTIVE){
-            return false;
-        }
-
-        this.state = states.INACTIVE;
-        return true;
-    },
-    balance: function(){
-        return this.amount;
-    },
-    getSymbol: function(){
-        return this.symbol;
-    },
     getOwner: function(){
         return this.owner;
     },
@@ -82,6 +41,9 @@ $$.asset.describe("Site", {
         this.owner = newOwner;
         //console.log("Site.js - owner updated!!!");
         return true;
+    },
+    getTime: function(){
+        return this.time;
     },
     getValues: function(){
         return this.values;

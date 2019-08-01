@@ -25,7 +25,7 @@ function getHandler(request, response) {
             const ris = interact.createRemoteInteractionSpace('testRemote', 'http://127.0.0.1:8080', 'local/agent/example');
 
             //var tokenName = "TOKEN_NAME_1";
-            var tokenSymbol = "Voltage";
+            var creationTime = Date();
 
         response.statusCode = 201;
         response.setHeader('Content-Type', 'application/json');
@@ -34,7 +34,7 @@ function getHandler(request, response) {
 
 
             console.log("OK1");
-            ris.startSwarm("measurement_example.siteManagement", "create", tokenSymbol, "cdamian").onReturn(function (err, siteId) {
+            ris.startSwarm("measurement_example.siteManagement", "create", creationTime, "cdamian").onReturn(function (err, siteId) {
                 if (err) {
                     console.log(err);
                    response.end('ERR', err);
@@ -70,14 +70,14 @@ function postHandler(request, response) {
             myId = siteId;
             console.log("received id: ", siteId);
 
-            ris.startSwarm("measurement_example.siteManagement", "existingSite", siteId).onReturn(function(err, owner){
+            ris.startSwarm("measurement_example.siteManagement", "existingSite", siteId).onReturn(function(err, site){
                 if(err){
                     response.end('Error!');
                 }else{
-                    console.log("ACCOUNT: valid", " Owner: ",owner);//valid?'valid!':'invalid!!',
-                    result = owner;
+                    console.log("ACCOUNT: valid", " Owner: ",site.owner, "Creation Timestamp: ", site.time);//valid?'valid!':'invalid!!',
+                    result = site;
 
-                    response.end(result);
+                    response.end(JSON.stringify(result));
                 }
             });
 
@@ -105,9 +105,12 @@ function postHandler(request, response) {
                     response.end('Error!');
                 }else{
                     console.log("ACCOUNT: valid", " Values: ",values);//valid?'valid!':'invalid!!',
-                    result = values;
 
-                    response.end(result);
+                    result = JSON.parse(values);
+                    console.log(" U: ",result.U);
+                    response.end(values + "\n" + result.timestamp);
+
+
                 }
             });
 
@@ -173,6 +176,8 @@ function putHandler(request, response) {
     else if (request.url === '/values') {
         request.on('data', function (data) {
             const dataIn = JSON.parse(data);
+           // dataIn.values.newProp = 'timestamp';
+            dataIn.values.timestamp =Date();
             //console.log(dataIn);
 
             if(!dataIn.hasOwnProperty('id') || !dataIn.hasOwnProperty('values')){
@@ -184,9 +189,9 @@ function putHandler(request, response) {
                 const ris = interact.createRemoteInteractionSpace('testRemote', 'http://127.0.0.1:8080', 'local/agent/example');
 
                 var siteId = dataIn.id;
-                var newValues = dataIn.values;
+                var newValues = JSON.stringify(dataIn.values);
 
-                console.log("received id: ", siteId, " newOwner: ", newValues);
+                console.log("received id: ", siteId, " newValues: ", newValues);
 
                 ris.startSwarm("measurement_example.siteManagement", "updateSiteValues", siteId, newValues).onReturn(function (err, data) {
                     if (err) {

@@ -1,8 +1,5 @@
 privatesky folosit pt articol sielmen
 
-account
-    - id nume punct masurare {timestamp, perechi cheie valoare}
-
 site: istoricul se pastreaza automat in blockchain
 site-ul va avea un string cu valorile masurate
 
@@ -11,10 +8,16 @@ POST
 /sites
     - parametru name: nume
     - return id
-
+PUT
+/sites
+    - id numenou
+/values
+    - id, set valori, la care adauga timestamp
 
 GET
 /sites/id
     - return nume
     /id/values
     - return marimi
+
+
