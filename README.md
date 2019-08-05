@@ -1,11 +1,19 @@
-<h1> Measurement PSK-example</h1>
+#Measurement PSK-example
 
+##Introduction
+PrivateSky system is a collaborative privacy system similar to blockchain systems: https://github.com/PrivateSky/privatesky.
+
+##About Measurement PSK-example
 This an example on how to use PrivateSky System in order to save and read any measurement or computed data. Is dedicated to be used with any technology that can acces web-services as client.
 
-The folder is located in psk-examples folder. Represents an Web API that can be uset to send/receive measured or computed values to privateSky Blockchain system.
+##Installing/Configuring
+The folder is located in psk-examples folder. Psk-examples is another PrivateSky repository that can be found at: https://github.com/PrivateSky/psk-examples. 
+
+##How it works
+Can be used as an Web API that can be used to send/receive measured or computed values to privateSky Blockchain system.
 
 The data is grouped as a collection of sites (measurement points) described as following JSON:
-{ 
+<div>{ 
   "id":"generated_by_system",
   "time":"timestamp with the site creation time & date",
   "owner":"the owner of the site",
@@ -17,7 +25,7 @@ The data is grouped as a collection of sites (measurement points) described as f
             },
   "user":"the user who updates the values"
 }
-
+</div>
 
 The API has the following functionalities:
 
