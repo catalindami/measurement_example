@@ -13,7 +13,7 @@ The folder is located in psk-examples folder. Psk-examples is another PrivateSky
 Can be used as an Web API that can be used to send/receive measured or computed values to privateSky Blockchain system.
 
 The data is grouped as a collection of sites (measurement points) described as following JSON:
-<div>{ 
+<div>`{ 
   "id":"generated_by_system",
   "time":"timestamp with the site creation time & date",
   "owner":"the owner of the site",
@@ -24,7 +24,7 @@ The data is grouped as a collection of sites (measurement points) described as f
             ......,
             },
   "user":"the user who updates the values"
-}
+}`
 </div>
 
 The API has the following functionalities:
