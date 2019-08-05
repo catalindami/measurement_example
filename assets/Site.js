@@ -9,7 +9,6 @@ $$.asset.describe("Site", {
         uid: "string:alias",
         owner: "string",
         values:"string",
-        amount: "number",
         time: "string",
         state: "string"
     },
@@ -22,8 +21,8 @@ $$.asset.describe("Site", {
         this.alias = uid;
         this.time = time;
         this.owner = owner;
-        this.amount = 0;
         this.values = "";
+        this.user = "";
         this.state = states.ACTIVE;
 
         return true;

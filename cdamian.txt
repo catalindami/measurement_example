@@ -3,21 +3,23 @@ privatesky folosit pt articol sielmen
 site: istoricul se pastreaza automat in blockchain
 site-ul va avea un string cu valorile masurate
 
+GET
+/sites - creaza un site, returneaza id-ul
+/sites/id
+    - return nume, timestamp creare
+/sites/id/field
+    - return field of site
+/values/id
+    - return marimi
+/values/id/param
+    - return param din values
 
-POST
-/sites
-    - parametru name: nume
-    - return id
 PUT
 /sites
-    - id numenou
+    - {id nume nou}
 /values
-    - id, set valori, la care adauga timestamp
+    - {id, set valori, user, la care adauga timestamp}
 
-GET
-/sites/id
-    - return nume
-    /id/values
-    - return marimi
+
 
 

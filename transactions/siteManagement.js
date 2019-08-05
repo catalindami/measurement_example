@@ -16,41 +16,6 @@ $$.transaction.describe("siteManagement", {
         }
         this.return(null, uid);
     },
-    close: function(siteId){
-        let transaction = $$.blockchain.beginTransaction({});
-
-        let site = transaction.lookup('measurement_example.Site', siteId);
-
-        if(!site.valid()){
-            this.return("Invalid site");
-            return;
-        }
-
-        if(!site.active()){
-            this.return("Site is not active.");
-            return;
-        }
-
-        if(site.balance() > 0){
-            this.return("Site balance to high.");
-            return;
-        }
-
-        if(!site.close()){
-            this.return("Site closing procedure failed.");
-            return;
-        }
-
-        try{
-            transaction.add(site);
-            $$.blockchain.commit(transaction);
-        }catch(err){
-            this.return("Site closing procedure failed.");
-            return;
-        }
-
-        this.return(null, siteId);
-    },
     existingSite: function(siteId){
         let transaction = $$.blockchain.beginTransaction({});
         let site = transaction.lookup('measurement_example.Site', siteId);
@@ -102,7 +67,7 @@ $$.transaction.describe("siteManagement", {
             this.return (null, value);
         }
     },
-    printSiteValues: function(siteId){
+    getSiteValues: function(siteId){
         let transaction = $$.blockchain.beginTransaction({});
         let site = transaction.lookup('measurement_example.Site', siteId);
 
