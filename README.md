@@ -1,6 +1,6 @@
 <h1> Measurement PSK-example</h1>
 
-This an example on how to use PrivateSky System in order to save and read any proprietary data.
+This an example on how to use PrivateSky System in order to save and read any measurement or computed data. Is dedicated to be used with any technology that can acces web-services as client.
 
 The folder is located in psk-examples folder. Represents an Web API that can be uset to send/receive measured or computed values to privateSky Blockchain system.
 
