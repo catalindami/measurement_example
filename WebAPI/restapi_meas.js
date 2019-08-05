@@ -1,7 +1,7 @@
 const http = require('http');
 const port = 3000;
-require('../../../builds/devel/pskruntime');
-require('../../../builds/devel/httpinteract');
+require('../../../../builds/devel/pskruntime');
+require('../../../../builds/devel/httpinteract');
 require('callflow');
 
 
